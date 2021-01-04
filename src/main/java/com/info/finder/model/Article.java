@@ -10,14 +10,15 @@ import java.util.List;
 
 @Getter
 @Setter
-@Document(collation = "article")
+@Document
 public class Article {
 
     @Id
     private String id;
-
+    private String url;
+    private String title;
+    private String author;
     private String description;
-
     private List<String> tags;
 
     public List<String> getTags() {

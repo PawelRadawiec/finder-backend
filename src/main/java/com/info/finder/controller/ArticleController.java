@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/article/")
+@CrossOrigin("*")
 public class ArticleController {
 
     private ArticleService articleService;
@@ -26,6 +27,12 @@ public class ArticleController {
     @GetMapping(value = "/search")
     public ResponseEntity<List<Article>> search() {
         return new ResponseEntity<>(articleService.search(), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity delete(@PathVariable String id) {
+        articleService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
