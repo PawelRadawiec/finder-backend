@@ -16,6 +16,7 @@ public class ArticleService {
     }
 
     public Article create(Article article) {
+        article.setAuthor("Mock author");
         return articleRepository.save(article);
     }
 

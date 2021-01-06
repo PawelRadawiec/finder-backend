@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,21 @@ public class Article {
 
     @Id
     private String id;
+
+    @NotEmpty
     private String url;
+
+    @NotEmpty
     private String title;
     private String author;
+
+    @NotEmpty
+    private String pictureUrl;
+
+    @NotEmpty
     private String description;
+    
+    @NotEmpty
     private List<String> tags;
 
     public List<String> getTags() {
