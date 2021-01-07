@@ -11,9 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @ControllerAdvice
 public class AppResponseHandler extends ResponseEntityExceptionHandler {
@@ -24,13 +22,16 @@ public class AppResponseHandler extends ResponseEntityExceptionHandler {
             MethodArgumentNotValidException ex, HttpHeaders headers,
             HttpStatus status, WebRequest request
     ) {
-        List<List<String>> response = new ArrayList<>();
-        ex.getBindingResult().getAllErrors().forEach(error -> appendResponse(error, response));
+        ExceptionResponse response = new ExceptionResponse();
+        ex.getBindingResult().getAllErrors().forEach(error -> appendResponse(error, response.getErrorMap()));
+
+        response.setStatus(String.valueOf(status.value()));
+        response.setMessage(ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    private void appendResponse(ObjectError error, List<List<String>> response) {
-        response.add(Arrays.asList(((FieldError) error).getField(), error.getDefaultMessage()));
+    private void appendResponse(ObjectError error, Map<String, String> response) {
+        response.put(((FieldError) error).getField(), error.getDefaultMessage());
     }
 
 }
