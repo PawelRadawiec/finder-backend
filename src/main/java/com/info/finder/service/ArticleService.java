@@ -24,6 +24,10 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
+    public Article getById(String id) {
+        return articleRepository.findById(id).orElseGet(Article::new);
+    }
+
     public void deleteById(String id) {
         articleRepository.deleteById(id);
     }

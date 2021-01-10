@@ -33,6 +33,8 @@ public class Article {
     @NotEmpty
     private List<String> tags;
 
+    List<Comment> comments;
+
     public List<String> getTags() {
         if (tags == null) {
             tags = new ArrayList<>();
@@ -40,4 +42,10 @@ public class Article {
         return tags;
     }
 
+    public List<Comment> getComments() {
+        if (comments == null) {
+            comments = new ArrayList<>();
+        }
+        return comments;
+    }
 }
