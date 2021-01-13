@@ -23,7 +23,7 @@ public class CommentController {
     @PostMapping(value = "{articleId}")
     public ResponseEntity<Article> add(
             @PathVariable String articleId,
-            @Valid  @RequestBody Comment comment
+            @Valid @RequestBody Comment comment
     ) {
         return new ResponseEntity<>(commentService.add(articleId, comment), HttpStatus.OK);
     }

@@ -6,7 +6,8 @@ import com.info.finder.repository.sequence.NextSequenceService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+
 
 @Service
 public class CommentService {
@@ -24,8 +25,7 @@ public class CommentService {
         comment.setId(nextSequenceService.getNextSequence(Comment.SEQUENCE_NAME));
         comment.setAuthor("john2321");
         comment.setShortText(substringText(comment.getText()));
-        comment.setDislikes(124);
-        comment.setLikes(3452);
+        comment.setRatings(new ArrayList<>());
         article.getComments().add(comment);
         return articleService.create(article);
     }
@@ -36,7 +36,7 @@ public class CommentService {
             return shortText;
         }
         int length = text.length();
-        shortText = length <= 40 ? text : text.substring(0 , length / 2) + "...";
+        shortText = length <= 40 ? text : text.substring(0, length / 2) + "...";
         return shortText;
     }
 

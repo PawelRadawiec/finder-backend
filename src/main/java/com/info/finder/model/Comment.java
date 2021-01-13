@@ -22,7 +22,9 @@ public class Comment {
     @NotEmpty()
     private String text;
     private String shortText;
-    private Integer likes;
-    private Integer dislikes;
+    private List<Rating> ratings;
 
+    public List<Rating> getRatings() {
+        return ratings;
+    }
 }
