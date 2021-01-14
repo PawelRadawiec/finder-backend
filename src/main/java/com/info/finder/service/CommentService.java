@@ -2,6 +2,7 @@ package com.info.finder.service;
 
 import com.info.finder.model.Article;
 import com.info.finder.model.Comment;
+import com.info.finder.model.Rating;
 import com.info.finder.repository.sequence.NextSequenceService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,20 @@ public class CommentService {
         int length = text.length();
         shortText = length <= 40 ? text : text.substring(0, length / 2) + "...";
         return shortText;
+    }
+
+    public Comment getCommentById(Long commentId, Article article) {
+        return article.getComments().stream()
+                .filter(c -> c.getId() == commentId)
+                .findAny()
+                .orElse(null);
+    }
+
+    public boolean containsRating(Comment comment, Rating rating) {
+        return comment.getRatings().stream()
+                .filter(r -> r.getAuthor().equals(rating.getAuthor()))
+                .findAny()
+                .orElse(null) != null;
     }
 
 }
