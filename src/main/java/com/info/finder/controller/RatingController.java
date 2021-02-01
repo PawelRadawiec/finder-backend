@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/rating/")
 @CrossOrigin("*")
+@RequestMapping(value = "/rating/")
 public class RatingController {
 
     private RatingService ratingService;
