@@ -2,11 +2,16 @@ package com.info.finder.controller;
 
 import com.info.finder.model.User;
 import com.info.finder.service.UserService;
+import com.info.finder.service.validation.UserValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
+
+import javax.validation.Valid;
+
 
 @RestController
 @CrossOrigin("*")
@@ -14,13 +19,20 @@ import org.springframework.data.domain.Pageable;
 public class UserController {
 
     private UserService userService;
+    private UserValidator userValidator;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserValidator userValidator) {
         this.userService = userService;
+        this.userValidator = userValidator;
+    }
+
+    @InitBinder
+    private void bindValidator(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(userValidator);
     }
 
     @PostMapping()
-    public ResponseEntity<User> create(@RequestBody User user) {
+    public ResponseEntity<User> create(@Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.create(user), HttpStatus.OK);
     }
 
