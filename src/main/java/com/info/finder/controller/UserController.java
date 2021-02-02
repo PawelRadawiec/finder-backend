@@ -2,7 +2,7 @@ package com.info.finder.controller;
 
 import com.info.finder.model.User;
 import com.info.finder.service.UserService;
-import com.info.finder.service.validation.UserValidator;
+import com.info.finder.service.validation.user.UserValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
