@@ -20,8 +20,9 @@ public class UserService implements SystemCrudOperations<User, String> {
     }
 
     @Override
-    public User create(User model) {
-        return userRepository.save(model);
+    public User create(User user) {
+        user.setActive(false);
+        return userRepository.save(user);
     }
 
     @Override

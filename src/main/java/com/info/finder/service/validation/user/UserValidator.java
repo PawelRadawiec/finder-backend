@@ -5,6 +5,7 @@ import com.info.finder.model.User;
 import com.info.finder.repository.UserRepository;
 import com.info.finder.service.validation.GenericValidator;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -65,7 +66,8 @@ public class UserValidator extends GenericValidator implements Validator {
         if (StringUtils.isEmpty(user.getUsername())) {
             return;
         }
-        User dbUser = userRepository.findByUsername(user.getUsername());
+        User dbUser = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + user.getUsername()));
         if (dbUser != null && user.getUsername().equals(dbUser.getUsername())) {
             validateIfTrue(StringUtils.isEmpty(user.getPassword()), "username", ValidationCode.UNIQUE.getValue(), errors);
         }
