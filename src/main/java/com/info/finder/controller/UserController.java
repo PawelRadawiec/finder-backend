@@ -1,5 +1,6 @@
 package com.info.finder.controller;
 
+import com.info.finder.model.MessageResponse;
 import com.info.finder.model.User;
 import com.info.finder.service.UserService;
 import com.info.finder.service.validation.user.UserValidator;
@@ -9,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
-
-import javax.validation.Valid;
 
 
 @RestController
@@ -29,11 +28,6 @@ public class UserController {
     @InitBinder
     private void bindValidator(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(userValidator);
-    }
-
-    @PostMapping()
-    public ResponseEntity<User> create(@Valid @RequestBody User user) {
-        return new ResponseEntity<>(userService.create(user), HttpStatus.OK);
     }
 
     @PutMapping()

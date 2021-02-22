@@ -15,4 +15,7 @@ public class Role {
 
     private RoleType name;
 
+    public Role(RoleType name) {
+        this.name = name;
+    }
 }
