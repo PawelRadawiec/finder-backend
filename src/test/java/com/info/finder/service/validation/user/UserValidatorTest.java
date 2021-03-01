@@ -3,7 +3,6 @@ package com.info.finder.service.validation.user;
 import com.info.finder.helper.ErrorFieldHelper;
 import com.info.finder.model.User;
 import com.info.finder.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,7 +10,8 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -65,7 +65,7 @@ class UserValidatorTest {
         userDb.setEmail("User123");
         Errors errors = new BeanPropertyBindingResult(user, "username");
 
-        when(userRepository.findByUsername("User123")).thenReturn(userDb);
+        when(userRepository.findByUsername("User123")).thenReturn(Optional.of(userDb));
         userValidator.validate(user, errors);
         assertEquals("Must be set", ErrorFieldHelper.getFieldErrorCode("username", errors));
     }

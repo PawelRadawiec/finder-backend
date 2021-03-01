@@ -65,8 +65,8 @@ public class UserValidator extends GenericValidator implements Validator {
         if (StringUtils.isEmpty(user.getUsername())) {
             return;
         }
-        User dbUser = userRepository.findByUsername(user.getUsername());
-        if (dbUser != null && user.getUsername().equals(dbUser.getUsername())) {
+        User dbUser = userRepository.findByUsername(user.getUsername()).orElse(new User());
+        if (user.getUsername().equals(dbUser.getUsername())) {
             validateIfTrue(StringUtils.isEmpty(user.getPassword()), "username", ValidationCode.UNIQUE.getValue(), errors);
         }
     }
