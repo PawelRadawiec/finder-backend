@@ -4,7 +4,6 @@ import com.info.finder.model.Role;
 import com.info.finder.model.RoleType;
 import com.info.finder.model.User;
 import com.info.finder.repository.UserRepository;
-import com.info.finder.repository.sequence.RoleRepository;
 import com.info.finder.service.generic.SystemCrudOperations;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,7 +32,8 @@ public class UserService implements SystemCrudOperations<User, String> {
         Set<Role> roles = new HashSet<>();
         roles.add(new Role(RoleType.ROLE_USER));
         user.setRoles(roles);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return user;
     }
 
     @Override

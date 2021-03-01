@@ -11,11 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/auth/")
+@RequestMapping(value = "/api/start/")
 public class AuthorizationController {
 
     private UserService userService;
@@ -40,11 +41,13 @@ public class AuthorizationController {
         webDataBinder.addValidators(userValidator);
     }
 
+    @PermitAll
     @PostMapping(value = "login")
     public ResponseEntity<?> signIn(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authorizationService.authorization(request));
     }
 
+    @PermitAll
     @PostMapping(value = "signup")
     public ResponseEntity<?> create(@Valid @RequestBody User user) {
         userService.create(user);
