@@ -11,6 +11,7 @@ public class SystemEmail {
 
     private String subject;
     private String message;
+    private String from;
     private String sendTo;
 
 }

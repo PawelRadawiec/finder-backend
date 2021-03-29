@@ -53,8 +53,7 @@ public class AuthorizationController {
     @PermitAll
     @PostMapping(value = "signup")
     public ResponseEntity<?> create(@Valid @RequestBody User user) {
-        registrationService.register(user);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(registrationService.register(user));
     }
 
 }

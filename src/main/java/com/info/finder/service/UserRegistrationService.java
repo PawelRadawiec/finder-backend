@@ -5,6 +5,7 @@ import com.info.finder.model.SystemEmail;
 import com.info.finder.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
 
 @Component
 @Transactional
@@ -22,17 +23,24 @@ public class UserRegistrationService {
         RegistrationResponse response = new RegistrationResponse();
         User userDb = userService.create(user);
         response.setUserId(user.getId());
-        response.setMessage(getRegistrationMessage(user));
-        SystemEmail systemEmail = new SystemEmail();
-        systemEmail.setSendTo(user.getEmail());
-        systemEmail.setSubject("Test subject");
-        systemEmail.setMessage(getRegistrationMessage(user));
-        emailService.send(systemEmail);
+        response.setMessage("Registration success");
+        emailService.send(prepareSystemEmail(user), "registration", registrationContext(userDb));
         return response;
     }
 
-    private String getRegistrationMessage(User user) {
-        return "Dear " + user.getFirstName() + " " + user.getLastName() + " click in verification link which you recieve";
+    private SystemEmail prepareSystemEmail(User user) {
+        SystemEmail email = new SystemEmail();
+        email.setSendTo(user.getEmail());
+        email.setSubject("Finder app - registration");
+        email.setFrom("finder@app");
+        return email;
+    }
+
+    private Context registrationContext(User user) {
+        Context context = new Context();
+        context.setVariable("header", String.format("Welcome %s %s", user.getFirstName(), user.getLastName()));
+        context.setVariable("activationLink", String.format("http://localhost:4200/activation/%s", user.getId()));
+        return context;
     }
 
 }
