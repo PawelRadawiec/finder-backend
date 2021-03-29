@@ -4,6 +4,7 @@ import com.info.finder.model.LoginRequest;
 import com.info.finder.model.MessageResponse;
 import com.info.finder.model.User;
 import com.info.finder.service.AuthorizationService;
+import com.info.finder.service.UserRegistrationService;
 import com.info.finder.service.UserService;
 import com.info.finder.service.validation.authorization.LoginValidator;
 import com.info.finder.service.validation.user.UserValidator;
@@ -20,12 +21,14 @@ import javax.validation.Valid;
 public class AuthorizationController {
 
     private UserService userService;
+    private UserRegistrationService registrationService;
     private UserValidator userValidator;
     private LoginValidator loginValidator;
     private AuthorizationService authorizationService;
 
-    public AuthorizationController(UserService userService, UserValidator userValidator, LoginValidator loginValidator, AuthorizationService authorizationService) {
+    public AuthorizationController(UserService userService, UserRegistrationService registrationService, UserValidator userValidator, LoginValidator loginValidator, AuthorizationService authorizationService) {
         this.userService = userService;
+        this.registrationService = registrationService;
         this.userValidator = userValidator;
         this.loginValidator = loginValidator;
         this.authorizationService = authorizationService;
@@ -50,7 +53,7 @@ public class AuthorizationController {
     @PermitAll
     @PostMapping(value = "signup")
     public ResponseEntity<?> create(@Valid @RequestBody User user) {
-        userService.create(user);
+        registrationService.register(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 

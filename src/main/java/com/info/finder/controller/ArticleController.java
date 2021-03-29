@@ -25,17 +25,17 @@ public class ArticleController {
         return new ResponseEntity<>(articleService.create(article), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/search")
+    @GetMapping(value = "search")
     public ResponseEntity<List<Article>> search() {
         return new ResponseEntity<>(articleService.search(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "{id}")
     public ResponseEntity<Article> getById(@PathVariable String id) {
         return new ResponseEntity<>(articleService.getById(id), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "delete/{id}")
     public ResponseEntity delete(@PathVariable String id) {
         articleService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
