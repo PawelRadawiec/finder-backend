@@ -51,7 +51,7 @@ class UserValidatorTest {
         userDb.setEmail("email@email.com");
         Errors errors = new BeanPropertyBindingResult(user, "user");
 
-        when(userRepository.findByEmail("email@email.com")).thenReturn(userDb);
+        when(userRepository.findByEmail("email@email.com")).thenReturn(Optional.of(userDb));
         userValidator.validate(user, errors);
         assertEquals("Must be unique", ErrorFieldHelper.getFieldErrorCode("email", errors));
     }

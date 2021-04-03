@@ -55,10 +55,8 @@ public class UserValidator extends GenericValidator implements Validator {
         if (StringUtils.isEmpty(user.getEmail())) {
             return;
         }
-        User dbUser = userRepository.findByEmail(user.getEmail());
-        if (dbUser != null && user.getEmail().equals(dbUser.getEmail())) {
-            validateIfTrue(StringUtils.isEmpty(user.getPassword()), "email", ValidationCode.UNIQUE.getValue(), errors);
-        }
+        User dbUser = userRepository.findByEmail(user.getEmail()).orElse(new User());
+        validateIfTrue(user.getEmail().equals(dbUser.getEmail()), "email", ValidationCode.UNIQUE.getValue(), errors);
     }
 
     private void validateUsernameUniqueness(User user, Errors errors) {
@@ -66,9 +64,7 @@ public class UserValidator extends GenericValidator implements Validator {
             return;
         }
         User dbUser = userRepository.findByUsername(user.getUsername()).orElse(new User());
-        if (user.getUsername().equals(dbUser.getUsername())) {
-            validateIfTrue(StringUtils.isEmpty(user.getPassword()), "username", ValidationCode.UNIQUE.getValue(), errors);
-        }
+        validateIfTrue(user.getUsername().equals(dbUser.getUsername()), "username", ValidationCode.UNIQUE.getValue(), errors);
     }
 
 }
