@@ -1,5 +1,6 @@
 package com.info.finder.service;
 
+import com.info.finder.model.MessageResponse;
 import com.info.finder.model.Role;
 import com.info.finder.model.RoleType;
 import com.info.finder.model.User;
@@ -60,6 +61,15 @@ public class UserService implements SystemCrudOperations<User, String> {
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    public MessageResponse activate(String id) {
+        User user = getById(id);
+        if(user != null && !user.isActive()) {
+            user.setActive(true);
+            update(user);
+        }
+        return new MessageResponse("Account has been activated");
     }
 
 }

@@ -56,4 +56,9 @@ public class AuthorizationController {
         return ResponseEntity.ok(registrationService.register(user));
     }
 
+    @PutMapping(value = "/activate/{id}")
+    public ResponseEntity<MessageResponse> activate(@PathVariable String id) {
+        return ResponseEntity.ok(userService.activate(id));
+    }
+
 }

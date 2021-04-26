@@ -21,9 +21,10 @@ public class UserRegistrationService {
 
     public RegistrationResponse register(User user) {
         RegistrationResponse response = new RegistrationResponse();
+        user.setActive(false);
         User userDb = userService.create(user);
         response.setUserId(user.getId());
-        response.setMessage("Registration success");
+        response.setMessage("Registration success, please open your email and click in activation link");
         emailService.send(prepareSystemEmail(user), "registration", registrationContext(userDb));
         return response;
     }
