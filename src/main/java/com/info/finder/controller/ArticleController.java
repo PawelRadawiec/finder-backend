@@ -1,6 +1,7 @@
 package com.info.finder.controller;
 
 import com.info.finder.model.Article;
+import com.info.finder.model.ArticleRegistration;
 import com.info.finder.service.ArticleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,9 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
-    @PostMapping(value = "create")
-    public ResponseEntity<Article> create(@Valid @RequestBody Article article) {
-        return new ResponseEntity<>(articleService.create(article), HttpStatus.OK);
+    @PostMapping(value = "registration")
+    public ResponseEntity<ArticleRegistration> create(@Valid @RequestBody ArticleRegistration registration) {
+        return new ResponseEntity<>(articleService.create(registration), HttpStatus.OK);
     }
 
     @GetMapping(value = "search")
