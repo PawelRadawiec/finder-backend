@@ -57,15 +57,20 @@ public class ArticleService {
     private void handleNext(ArticleRegistration registration) {
         switch (registration.getCurrentStep()) {
             case DATA -> {
+                Article article = registration.getArticle();
+                article.setStatus(ArticleStatus.CREATION);
                 registration.setCurrentStep(ArticleStep.SUMMARY);
                 registration.setButtonsVisibility(Arrays.asList(Buttons.NEXT, Buttons.BACK));
             }
             case SUMMARY -> {
+                Article article = registration.getArticle();
+                article.setStatus(ArticleStatus.CREATION);
                 registration.setCurrentStep(ArticleStep.DONE);
                 registration.setButtonsVisibility(Arrays.asList(Buttons.SAVE, Buttons.BACK));
             }
             case DONE -> {
                 Article article = registration.getArticle();
+                article.setStatus(ArticleStatus.SAVED);
                 article.setAuthor(SystemUserHelper.username());
                 articleRepository.save(article);
                 registration.setCurrentStep(ArticleStep.DONE);

@@ -35,6 +35,8 @@ public class Article {
 
     List<Comment> comments;
 
+    private ArticleStatus status;
+
     public List<String> getTags() {
         if (tags == null) {
             tags = new ArrayList<>();
