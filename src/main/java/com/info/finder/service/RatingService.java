@@ -23,6 +23,7 @@ public class RatingService {
         Article article = articleService.getById(articleId);
         Comment comment = commentService.getCommentById(commentId, article);
         if (comment != null && rating != null) {
+            rating.setAuthor(SystemUserHelper.username());
             if (commentService.containsRating(comment, rating)) {
                 article = ratingRepository.updateRatting(articleId, commentId, rating);
             } else {

@@ -2,6 +2,7 @@ package com.info.finder.service;
 
 import com.info.finder.model.Article;
 import com.info.finder.model.Comment;
+import com.info.finder.model.Message;
 import com.info.finder.model.Rating;
 import com.info.finder.repository.sequence.NextSequenceService;
 import org.apache.commons.lang3.StringUtils;
@@ -15,19 +16,26 @@ public class CommentService {
 
     private ArticleService articleService;
     private NextSequenceService nextSequenceService;
+    private CommentMessageService messageService;
 
-    public CommentService(ArticleService articleService, NextSequenceService nextSequenceService) {
+    public CommentService(ArticleService articleService, NextSequenceService nextSequenceService, CommentMessageService messageService) {
         this.articleService = articleService;
         this.nextSequenceService = nextSequenceService;
+        this.messageService = messageService;
     }
 
     public Article add(String articleId, Comment comment) {
         Article article = articleService.getById(articleId);
         comment.setId(nextSequenceService.getNextSequence(Comment.SEQUENCE_NAME));
-        comment.setAuthor("john2321");
+        comment.setAuthor(SystemUserHelper.username());
         comment.setShortText(substringText(comment.getText()));
         comment.setRatings(new ArrayList<>());
         article.getComments().add(comment);
+        messageService.send(new Message(
+                article.getAuthor(),
+                comment.getAuthor(),
+                String.format("Comment from %s", comment.getAuthor())
+        ));
         return articleService.create(article);
     }
 
