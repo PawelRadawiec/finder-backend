@@ -34,7 +34,7 @@ public class CommentService {
         messageService.send(new Message(
                 article.getAuthor(),
                 comment.getAuthor(),
-                String.format("Comment from %s", comment.getAuthor())
+                String.format("Comment from %s. %s", comment.getAuthor(), comment.getShortText())
         ));
         return articleService.create(article);
     }
